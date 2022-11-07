@@ -1,18 +1,14 @@
 package com.example.freeplayandroidclient;
 
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,9 +43,9 @@ public class AuthActivity extends Base implements RegistrationDialog.Registratio
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Boolean remember = remember_me.isChecked();
                 String email_text = email.getText().toString();
                 String password_text = password.getText().toString();
-                Log.i("LOGGING", email_text + " " + password_text);
                 if (emailValidator(email_text)) {
                     api.searchUserByEmailAndPassword(
                             email_text, password_text,
@@ -58,13 +54,15 @@ public class AuthActivity extends Base implements RegistrationDialog.Registratio
                                 public void onResponse(JSONObject response) {
                                     try {
                                         if (response.getBoolean("status")) {
-                                            Global.currentUser = new User(
-                                                    response.getString("userName"),
-                                                    response.getString("userEmail"),
-                                                    response.getString("userPassword"),
-                                                    response.getString("userTelephone"),
-                                                    response.getBoolean("userStatus")
-                                            );
+                                            if (remember) {
+                                                User user = new User(
+                                                        response.getString("userName"),
+                                                        response.getString("userEmail"),
+                                                        response.getString("userPassword"),
+                                                        response.getString("userTelephone"),
+                                                        response.getString("userStatus"));
+                                                user.setId("0"); dataStorage.saveUser(user);
+                                            }
                                         } else {
                                             Toast toast = Toast.makeText(getBaseContext(),
                                                     response.getString("message"),
@@ -84,18 +82,6 @@ public class AuthActivity extends Base implements RegistrationDialog.Registratio
             @Override
             public void onClick(View v) {
                 showRegistrationDialog();
-            }
-        });
-
-        remember_me.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*
-                SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                SharedPreferences.Editor editor = settings.edit();
-                editor.putBoolean("auth", true);
-                editor.apply();
-                 */
             }
         });
     }
@@ -154,5 +140,6 @@ public class AuthActivity extends Base implements RegistrationDialog.Registratio
             return false;
         }
     }
+
 
 }

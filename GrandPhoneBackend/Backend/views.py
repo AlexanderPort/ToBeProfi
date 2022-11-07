@@ -23,9 +23,9 @@ def post_user(request, *args, **kwargs):
         data = request.POST
         user = User(name=data['userName'],
                     email=data['userEmail'],
+                    user_type=data['userStatus'],
                     password=data['userPassword'],
-                    telephone=data['userTelephone'],
-                    user_type='P' if int(data['userStatus']) else 'D')
+                    telephone=data['userTelephone'])
 
         if User.objects.filter(email=user.email).exists():
             return JsonResponse({'status': 'exist'})

@@ -1,18 +1,31 @@
 package com.example.freeplayandroidclient.dataClasses;
 
+import java.util.UUID;
+
 public class User {
+    private String id;
     private String name;
     private String email;
+    private String status;
     private String password;
     private String telephone;
-    private Boolean status;
+
     public User(String name, String email, String password,
-                String telephone, Boolean status) {
+                String telephone, String status) {
+        this.id = UUID.randomUUID().toString().replace('-', 'x');;
         this.name = name;
         this.email = email;
         this.status = status;
         this.password = password;
         this.telephone = telephone;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -23,7 +36,7 @@ public class User {
         return email;
     }
 
-    public Boolean getStatus() {
+    public String getStatus() {
         return status;
     }
 

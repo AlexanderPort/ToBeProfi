@@ -24,14 +24,14 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class Base extends AppCompatActivity {
+public abstract class Base extends AppCompatActivity {
     protected API api;
-
+    protected DataStorage dataStorage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         api = new API(getBaseContext());
-
+        dataStorage = new DataStorage(getBaseContext());
     }
 
 }

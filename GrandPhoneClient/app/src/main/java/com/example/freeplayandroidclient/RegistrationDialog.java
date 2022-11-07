@@ -110,14 +110,14 @@ public class RegistrationDialog extends DialogFragment implements View.OnClickLi
     public Bitmap getUserImage() {
         return bitmap;
     }
-    public Boolean getUserStatus() {
-        return userStatus.isChecked();
-    }
     public String getUserName() {
         return userName.getText().toString();
     }
     public String getUserEmail() {
         return userEmail.getText().toString();
+    }
+    public String getUserStatus() {
+        return userStatus.isChecked() ? "P" : "D";
     }
     public String getUserPassword() {
         return userPassword.getText().toString();

@@ -126,3 +126,68 @@ STATIC_URL = '/static/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+'''
+?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/black"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SearchActivity">
+    <LinearLayout
+        android:id="@+id/options"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:alpha="0.7"
+            android:background="@drawable/rounded_edittext"
+            android:drawableLeft="@mipmap/search"
+            android:drawablePadding="10dp"
+            android:hint="Search music..."
+            android:minHeight="48dp"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="16dp">
+        </EditText>
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:layout_gravity="left"
+            android:layout_marginTop="-5dp">
+            <com.google.android.material.chip.Chip
+                android:id="@+id/protectorChip"
+                android:alpha="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="By track name" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/dependantChip"
+                android:alpha="0.5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="By artist name" />
+        </com.google.android.material.chip.ChipGroup>
+    </LinearLayout>
+    <com.example.freeplayandroidclient.UserRecyclerView
+        android:id="@+id/userRecyclerView"
+        android:layout_below="@+id/options"
+        android:layout_weight="30"
+        android:layout_gravity="top"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.example.freeplayandroidclient.UserRecyclerView>
+
+</RelativeLayout>
+'''

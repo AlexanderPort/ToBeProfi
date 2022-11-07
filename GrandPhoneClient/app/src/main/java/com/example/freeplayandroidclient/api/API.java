@@ -54,9 +54,9 @@ public class API {
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("userName", user.getName());
                 params.put("userEmail", user.getEmail());
+                params.put("userStatus", user.getStatus());
                 params.put("userPassword", user.getPassword());
                 params.put("userTelephone", user.getTelephone());
-                params.put("userStatus", user.getStatus() ? "1" : "0");
                 return params;
             }
             @Override
@@ -72,6 +72,19 @@ public class API {
                                   Response.Listener<JSONObject> listener) {
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET,
                 String.format("%s/api/users/search/%s/%s", API, email, password), null, listener,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                }){};
+
+        requestQueue.add(jsonRequest);
+    }
+
+    public void searchUsersName(String name, Response.Listener<JSONObject> listener) {
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET,
+                String.format("%s/api/users/search/%s", API, name), null, listener,
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -113,9 +126,10 @@ public class API {
                 Map<String,String> params = new HashMap<String, String>();
                 params.put("userName", user.getName());
                 params.put("userEmail", user.getEmail());
+                params.put("userStatus", user.getStatus());
                 params.put("userPassword", user.getPassword());
                 params.put("userTelephone", user.getTelephone());
-                params.put("userStatus", user.getStatus() ? "1" : "0");
+
                 return params;
             }
 
@@ -123,6 +137,8 @@ public class API {
 
         requestQueue.add(volleyMultipartRequest);
     }
+
+
 
     public byte[] getFileDataFromDrawable(Bitmap bitmap) {
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
