@@ -1,0 +1,189 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/black"
+    android:padding="20dp"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:background="@color/black"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="Исходная дата:    "
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+            <EditText
+                android:gravity="center"
+                android:id="@+id/d_date_id"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape1"
+                android:textColor="@color/white"
+                android:padding="1dp"
+                android:textColorHighlight="@color/white"
+                android:textColorHint="@color/white"
+                android:inputType="date"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="Время:    "
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+            <EditText
+                android:gravity="center"
+                android:id="@+id/d_time_id"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape1"
+                android:textColor="@color/white"
+                android:padding="1dp"
+                android:textColorHighlight="@color/white"
+                android:textColorHint="@color/white"
+                android:inputType="time"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="Периодичность:    "
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+            <EditText
+                android:gravity="center"
+                android:id="@+id/d_period_id"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape1"
+                android:textColor="@color/white"
+                android:padding="1dp"
+                android:textColorHighlight="@color/white"
+                android:textColorHint="@color/white"
+                android:inputType="number"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="Длительность:    "
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+            <EditText
+                android:gravity="center"
+                android:id="@+id/d_duration_id"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape1"
+                android:textColor="@color/white"
+                android:padding="1dp"
+                android:textColorHighlight="@color/white"
+                android:textColorHint="@color/white"
+                android:inputType="number"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="Содержание:    "
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+            <EditText
+                android:gravity="center"
+                android:id="@+id/d_content_id"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape1"
+                android:textColor="@color/white"
+                android:padding="1dp"
+                android:textColorHighlight="@color/white"
+                android:textColorHint="@color/white"
+                android:inputType="text"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:text="Выберите подопечного:   "
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </TextView>
+            <Spinner
+                android:background="@color/white"
+                android:id="@+id/spinner_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Spinner>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/cancel_id"
+                android:layout_marginRight="30dp"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@android:color/transparent"
+                android:text="Отмена" />
+
+            <Button
+                android:id="@+id/create_id"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:shadowColor="@android:color/transparent"
+                android:text="Подтвердить" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</ScrollView>

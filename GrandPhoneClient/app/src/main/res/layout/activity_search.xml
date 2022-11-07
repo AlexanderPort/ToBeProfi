@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/back"
+    android:orientation="vertical"
+    android:weightSum="20"
+    tools:context=".SearchActivity">
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:id="@+id/options"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:alpha="0.8"
+            android:background="@drawable/rounded_edittext"
+            android:drawableLeft="@mipmap/search"
+            android:drawablePadding="10dp"
+            android:hint="Введите имя пользователя..."
+            android:minHeight="48dp"
+            android:padding="5dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="16dp">
+        </EditText>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:layout_gravity="left"
+                android:layout_marginTop="-5dp">
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/protectorChip"
+                    android:alpha="0.5"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Опекун" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/dependantChip"
+                    android:alpha="0.5"
+                    android:textSize="20sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Подопечный" />
+            </com.google.android.material.chip.ChipGroup>
+            <Button
+                android:id="@+id/search_button"
+                android:text="Поиск"
+                android:textSize="20sp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Button>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.example.freeplayandroidclient.UserRecyclerView
+        android:layout_weight="17"
+        android:id="@+id/userRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.example.freeplayandroidclient.UserRecyclerView>
+
+    <Button
+        android:text="Назад"
+        android:textSize="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_gravity="center">
+    </Button>
+
+</androidx.appcompat.widget.LinearLayoutCompat>
