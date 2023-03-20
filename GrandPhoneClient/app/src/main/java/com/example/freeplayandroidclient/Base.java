@@ -33,5 +33,4 @@ public abstract class Base extends AppCompatActivity {
         api = new API(getBaseContext());
         dataStorage = new DataStorage(getBaseContext());
     }
-
 }

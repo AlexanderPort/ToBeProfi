@@ -1,6 +1,7 @@
 package com.example.freeplayandroidclient;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 
@@ -19,6 +20,8 @@ import com.example.freeplayandroidclient.dataClasses.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.UUID;
 
 public class AuthActivity extends Base implements RegistrationDialog.RegistrationDialogListener {
     EditText email, password;
@@ -46,6 +49,8 @@ public class AuthActivity extends Base implements RegistrationDialog.Registratio
                 Boolean remember = remember_me.isChecked();
                 String email_text = email.getText().toString();
                 String password_text = password.getText().toString();
+                final String[] id = {UUID.randomUUID().toString()};
+                id[0] = id[0].replace('x', '-');
                 if (emailValidator(email_text)) {
                     api.searchUserByEmailAndPassword(
                             email_text, password_text,
@@ -53,6 +58,7 @@ public class AuthActivity extends Base implements RegistrationDialog.Registratio
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     try {
+
                                         if (response.getBoolean("status")) {
                                             if (remember) {
                                                 User user = new User(
@@ -61,8 +67,12 @@ public class AuthActivity extends Base implements RegistrationDialog.Registratio
                                                         response.getString("userPassword"),
                                                         response.getString("userTelephone"),
                                                         response.getString("userStatus"));
-                                                user.setId("0"); dataStorage.saveUser(user);
+                                                dataStorage.saveCurrentUser(user);
+
                                             }
+                                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                                            startActivity(intent);
+
                                         } else {
                                             Toast toast = Toast.makeText(getBaseContext(),
                                                     response.getString("message"),
@@ -95,6 +105,9 @@ public class AuthActivity extends Base implements RegistrationDialog.Registratio
     public void onDialogPositiveClick(RegistrationDialog dialog) {
         User user = dialog.getUser();
         Bitmap bitmap = dialog.getUserImage();
+        final String[] id = {UUID.randomUUID().toString()};
+        id[0] = id[0].replace('x', '-');
+        user.setId(id[0]);
         if (emailValidator(user.getEmail()) && telephoneValidator(user.getTelephone())) {
             api.postUserWithImage(user, bitmap, new API.OnResponseListener<NetworkResponse>() {
                 @Override
@@ -105,7 +118,12 @@ public class AuthActivity extends Base implements RegistrationDialog.Registratio
                             Toast toast = Toast.makeText(getBaseContext(),
                                     "User with such email already exists!", Toast.LENGTH_LONG);
                             toast.show();
-                        } else { dialog.dismiss(); }
+                        } else {
+                            dataStorage.saveCurrentUser(user);
+                            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                            startActivity(intent);
+                            dialog.dismiss();
+                        }
                     } catch (JSONException exception) { exception.printStackTrace(); }
                 }
                 @Override

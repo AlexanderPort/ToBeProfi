@@ -10,35 +10,58 @@
     tools:context=".ProtectorSettingsActivity">
 
     <LinearLayout
-        android:layout_weight="18"
-        android:id="@+id/options"
+        android:gravity="center"
         android:orientation="vertical"
+        android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-        <Button
-            android:text="Профиль"
+        <TextView
+            android:text="Мой телефон"
+            android:textSize="30sp"
+            android:textColor="@color/white"
+            android:layout_marginBottom="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        </Button>
-        <Button
+        </TextView>
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/back_button"
+                android:text="Главное меню"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Button>
+            <Button
+                android:id="@+id/add_button"
+                android:text="Привязать\nпользователя"
+                android:textSize="15sp"
+                android:layout_marginLeft="50dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+            </Button>
+        </LinearLayout>
+        <TextView
+            android:text="Привязанные пользователи:"
+            android:textSize="25sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="5dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-        </Button>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-        </Button>
+        </TextView>
     </LinearLayout>
 
+    <com.example.freeplayandroidclient.UserRecyclerView
 
+        android:layout_weight="17"
+        android:layout_marginTop="15sp"
+        android:id="@+id/userRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.example.freeplayandroidclient.UserRecyclerView>
 
-    <Button
-        android:text="Назад"
-        android:textSize="30dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_gravity="center">
-    </Button>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

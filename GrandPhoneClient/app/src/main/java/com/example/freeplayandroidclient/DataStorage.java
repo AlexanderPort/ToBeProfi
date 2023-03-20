@@ -7,12 +7,14 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 
+import com.example.freeplayandroidclient.dataClasses.Notification;
 import com.example.freeplayandroidclient.dataClasses.User;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 public class DataStorage {
@@ -21,42 +23,95 @@ public class DataStorage {
     private SharedPreferences.Editor editor;
     public DataStorage(Context context) {
         settings = PreferenceManager.getDefaultSharedPreferences(context);
-        editor = settings.edit(); currentUser = getUser("0");
-        //editor.putStringSet("id", new HashSet<>());
+        editor = settings.edit(); //editor.putString("ID", "0");
+        currentUser = getUser(settings.getString("ID", ""));
+        //editor.putStringSet("user_id", new HashSet<>());
+        //editor.putStringSet("notification_id", new HashSet<>());
+        editor.apply();
     }
-    public void saveUser(User user) {
-        Set<String> set = settings.getStringSet("id", new HashSet<>());
-        set.add(user.getId()); editor.putStringSet("id", set);
+    public void saveCurrentUser(User user) {
+        editor.putString("ID", user.getId());
         editor.putString("user_name_" + user.getId(), user.getName());
         editor.putString("user_email_" + user.getId(), user.getEmail());
         editor.putString("user_status_" + user.getId(), user.getStatus());
         editor.putString("user_password_" + user.getId(), user.getPassword());
         editor.putString("user_telephone_" + user.getId(), user.getTelephone());
+        editor.apply();
+    }
+    public String getCurrentUserId() {
+        return settings.getString("ID", "");
+    }
+    public User getCurrentUser() {
+        String id = getCurrentUserId();
+        return new User(id,
+                settings.getString("user_name_" + id, ""),
+                settings.getString("user_email_" + id, ""),
+                settings.getString("user_status_" + id, ""),
+                settings.getString("user_password_" + id, ""),
+                settings.getString("user_telephone_" + id, ""));
+    }
+    public void saveUser(User user) {
+        Set<String> set = settings.getStringSet("user_id", new HashSet<>());
+        set.add(user.getId()); editor.putStringSet("user_id", set);
+        editor.putString("user_name_" + user.getId(), user.getName());
+        editor.putString("user_email_" + user.getId(), user.getEmail());
+        editor.putString("user_status_" + user.getId(), user.getStatus());
+        editor.putString("user_password_" + user.getId(), user.getPassword());
+        editor.putString("user_telephone_" + user.getId(), user.getTelephone());
+        editor.apply();
+    }
+
+    public void saveProtector(String p, String d) {
+        editor.putString("user_" + d + "_protector_id", d);
+        editor.apply();
+    }
+
+    public String getProtector(String d) {
+        return settings.getString("user_" + d + "_protector_id", "");
+    }
+
+    public void saveNotification(Notification notification) {
+        Set<String> set = settings.getStringSet("notification_id", new HashSet<>());
+        set.add(notification.getId()); editor.putStringSet("notification_id", set);
+        editor.putString("notification_message_" + notification.getId(), notification.getMessage());
+
+    }
+
+    public Notification getNotification(String id) {
+        return new Notification(id, getNotificationMessage(id));
     }
 
     public User getUser(String id) {
-        return new User(getUserName(id),
+        return new User(id, getUserName(id),
                 getUserEmail(id), getUserPassword(id),
                 getUserTelephone(id), getUserStatus(id));
     }
 
     public ArrayList<User> getUsers() {
         ArrayList<User> users = new ArrayList<>();
-        Set<String> set = settings.getStringSet("id", new HashSet<>());
+        Set<String> set = settings.getStringSet("user_id", new HashSet<>());
+        System.out.println(getCurrentUserId());
         for (String id : set) {
-            if (id == "0") continue;
+            if (Objects.equals(id, getCurrentUserId())) continue;
             users.add(getUser(id));
         }
         return users;
     }
 
-    public ArrayList<User> getDependants() {
-        ArrayList<User> users = new ArrayList<>();
-        Set<String> set = settings.getStringSet("id", new HashSet<>());
+    public ArrayList<Notification> getNotifications() {
+        ArrayList<Notification> notifications = new ArrayList<>();
+        Set<String> set = settings.getStringSet("notification_id", new HashSet<>());
         for (String id : set) {
-            if (id == "0") continue;
-            if (getUserStatus(id).equals("P")) continue;
-            users.add(getUser(id));
+            notifications.add(getNotification(id));
+        }
+        return notifications;
+    }
+
+    public ArrayList<User> getDependants(String ID) {
+        ArrayList<User> users = new ArrayList<>();
+        Set<String> set = settings.getStringSet("user_id", new HashSet<>());
+        for (String id : set) {
+            if (ID.equals(getProtector(id))) users.add(getUser(id));
         }
         return users;
     }
@@ -79,6 +134,14 @@ public class DataStorage {
 
     public String getUserTelephone(String id) {
         return settings.getString("user_telephone_" + id, "");
+    }
+
+    public String getNotificationMessage(String id) {
+        return settings.getString("notification_message_" + id, "");
+    }
+
+    public String getUserProtectorId() {
+        return "";
     }
 
     public Bitmap getUserImage(String id) {

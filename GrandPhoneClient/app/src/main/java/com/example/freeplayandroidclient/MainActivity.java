@@ -61,6 +61,14 @@ public class MainActivity extends Base {
             }
         });
 
+        messageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), NotificationActivity.class);
+                startActivity(intent);
+            }
+        });
+
         scheduleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,10 +76,18 @@ public class MainActivity extends Base {
                 startActivity(intent);
             }
         });
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), ProtectorSettingsActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void checkAuth() {
-        if (dataStorage.currentUser.getName().isEmpty()) {
+        if (dataStorage.getCurrentUserId().equals("0")) {
             Intent intent = new Intent(this, AuthActivity.class);
             startActivity(intent);
         } else {

@@ -1,5 +1,6 @@
 package com.example.freeplayandroidclient;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -14,7 +15,9 @@ import com.example.freeplayandroidclient.dataClasses.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class PhoneContactsActivity extends Base implements ContactDialog.ContactDialogListener {
+import java.util.UUID;
+
+public class PhoneContactsActivity extends Base implements ContactDialog1.ContactDialogListener {
     private Button addButton;
     private Button backButton;
     private UserRecyclerView userRecyclerView;
@@ -33,24 +36,53 @@ public class PhoneContactsActivity extends Base implements ContactDialog.Contact
                 showContactDialog();
             }
         });
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void showContactDialog() {
-        ContactDialog dialog = new ContactDialog();
+        ContactDialog1 dialog = new ContactDialog1();
         dialog.show(getSupportFragmentManager(), "ContactDialog");
     }
 
     @Override
-    public void onDialogPositiveClick(ContactDialog dialog) {
+    public void onDialogPositiveClick(ContactDialog1 dialog) {
         User user = dialog.getUser();
+        final String[] id = {UUID.randomUUID().toString()};
+        id[0] = id[0].replace('x', '-');
         Bitmap bitmap = dialog.getUserImage();
-        if (telephoneValidator(user.getTelephone()) && false) {
+        if (true) {
             api.postUserWithImage(user, bitmap, new API.OnResponseListener<NetworkResponse>() {
                 @Override
                 public void onResponse(NetworkResponse response) {
                     try {
                         JSONObject object = new JSONObject(new String(response.data));
-                        dialog.dismiss();
+                        if (object.getString("status").equals("exist")) {
+                            id[0] = object.getString("id");
+                            if (!user.getPassword().equals(object.getString("password"))) {
+                                Toast.makeText(
+                                        getBaseContext(),
+                                        "Пользователь уже существует.\nПароль неверный",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                dataStorage.saveUser(user);
+                                dataStorage.saveUserImage(user, bitmap);
+                                userRecyclerView.addUser(user);
+                                dialog.dismiss();
+                            }
+                        } else {
+                            user.setId(id[0]);
+                            dataStorage.saveUser(user);
+                            dataStorage.saveUserImage(user, bitmap);
+                            userRecyclerView.addUser(user);
+                            dialog.dismiss();
+                        }
+
                     } catch (JSONException exception) { exception.printStackTrace(); }
                 }
                 @Override
@@ -60,15 +92,11 @@ public class PhoneContactsActivity extends Base implements ContactDialog.Contact
                     }
                 }
             });
-
         }
-        dataStorage.saveUserImage(user, bitmap);
-        userRecyclerView.addUser(user);
-        dialog.dismiss();
     }
 
     @Override
-    public void onDialogNegativeClick(ContactDialog dialog) {
+    public void onDialogNegativeClick(ContactDialog1 dialog) {
         dialog.dismiss();
     }
 

@@ -53,10 +53,11 @@
             android:textSize="20dp">
 
         </TextView>
+
         <ScrollView
             android:id="@+id/scrollable1"
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:background="@drawable/rounded_layout">
 
             <LinearLayout

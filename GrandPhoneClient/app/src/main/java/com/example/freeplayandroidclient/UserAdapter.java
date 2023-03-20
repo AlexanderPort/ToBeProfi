@@ -20,7 +20,6 @@ import java.util.List;
 
 public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     private List<User> users;
-    private int nextTrackIndex = 0;
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView thumbnail;
         private final TextView username;
@@ -45,12 +44,16 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         }
     }
     public static class User {
+        private String id;
         private String name;
         private Bitmap thumbnail;
         private ViewHolder viewHolder;
         private OnClickListener onClickListener;
-        public User(String name) {
+        public User(String id, String name) {
             this.name = name;
+        }
+        public String getId() {
+            return id;
         }
         public String getName() {
             return name;

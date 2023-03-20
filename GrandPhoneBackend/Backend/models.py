@@ -7,10 +7,10 @@ class User(models.Model):
         ('D', 'Dependant'),
         ('P', 'Protector')
     ]
-
+    id = models.CharField(max_length=100, primary_key=True)
     name = models.CharField(max_length=50)
     password = models.CharField(max_length=20)
-    telephone = models.CharField(max_length=10)
+    telephone = models.CharField(max_length=20)
     email = models.EmailField()
     photo = models.FilePathField()
     priority = models.BooleanField(default=0)
@@ -21,6 +21,7 @@ class User(models.Model):
 
 
 class Relation(models.Model):
+    id = models.CharField(max_length=100, primary_key=True)
     protector = models.ForeignKey(to=User, on_delete=models.CASCADE,
                                   related_name='protector_relation')
     dependant = models.ForeignKey(to=User, on_delete=models.CASCADE,
@@ -28,6 +29,7 @@ class Relation(models.Model):
 
 
 class Interface(models.Model):
+    id = models.CharField(max_length=100, primary_key=True)
     protector = models.ForeignKey(to=User, on_delete=models.CASCADE,
                                   related_name='protector_interface')
     dependant = models.ForeignKey(to=User, on_delete=models.CASCADE,
@@ -36,6 +38,7 @@ class Interface(models.Model):
 
 
 class Notification(models.Model):
+    id = models.CharField(max_length=100, primary_key=True)
     created = models.DateTimeField(auto_now_add=True)
     days = ArrayField(models.BooleanField(default=0))
     status = models.BooleanField(default=0)
@@ -45,6 +48,7 @@ class Notification(models.Model):
 
 
 class Message(models.Model):
+    id = models.CharField(max_length=100, primary_key=True)
     protector = models.ForeignKey(to=User, on_delete=models.CASCADE,
                                   related_name='protector_message')
     dependant = models.ForeignKey(to=User, on_delete=models.CASCADE,
@@ -60,6 +64,7 @@ class Activity(models.Model):
         ('M', 'Message'),
         ('N', 'Notification')
     ]
+    id = models.CharField(max_length=100, primary_key=True)
     protector = models.ForeignKey(to=User, on_delete=models.CASCADE,
                                   related_name='protector_activity')
     dependant = models.ForeignKey(to=User, on_delete=models.CASCADE,

@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 public class UserRecyclerView extends RecyclerView {
     private API api;
@@ -51,9 +52,6 @@ public class UserRecyclerView extends RecyclerView {
         this.userAdapter = userAdapter;
     }
     public void addUser(User user) {
-        System.out.println(user.getId());
-        if (ids.contains(user.getId())) return;
-        else ids.add(user.getId());
         UserAdapter.User.OnClickListener onClickListener =
                 new UserAdapter.User.OnClickListener() {
                     @Override
@@ -62,14 +60,30 @@ public class UserRecyclerView extends RecyclerView {
 
                     }
                 };
-        UserAdapter.User userAdapter = new UserAdapter.User(user.getName());
+        UserAdapter.User userAdapter = new UserAdapter.User(user.getId(),user.getName());
         userAdapter.setThumbnail(dataStorage.getUserImage(user.getId()));
         userAdapter.setOnClickListener(onClickListener);
-        users.add(userAdapter);
+        this.users.add(userAdapter);
         this.userAdapter.setItems(this.users);
         this.userAdapter.notifyDataSetChanged();
     }
     public void addUsers(List<User> users) {
-        for (User user : users) this.addUser(user);
+        this.users = new ArrayList<>();
+        for (User user : users) {
+            UserAdapter.User.OnClickListener onClickListener =
+                    new UserAdapter.User.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Context context = getContext();
+
+                        }
+                    };
+            UserAdapter.User userAdapter = new UserAdapter.User(user.getId(),user.getName());
+            userAdapter.setThumbnail(dataStorage.getUserImage(user.getId()));
+            userAdapter.setOnClickListener(onClickListener);
+            this.users.add(userAdapter);
+        }
+        this.userAdapter.setItems(this.users);
+        this.userAdapter.notifyDataSetChanged();
     }
 }

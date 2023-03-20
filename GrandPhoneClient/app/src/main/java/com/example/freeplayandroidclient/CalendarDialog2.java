@@ -95,7 +95,7 @@ public class CalendarDialog2 extends DialogFragment implements View.OnClickListe
         spinner = view.findViewById(R.id.spinner_id);
 
         dataStorage = new DataStorage(getContext());
-        users = dataStorage.getDependants();
+        users = dataStorage.getDependants(dataStorage.getCurrentUserId());
         User[] dependants = new User[users.size()];
         SpinnerAdapter adapter = new SpinnerAdapter(getContext(),
                 R.layout.spinner_item, users.toArray(dependants));

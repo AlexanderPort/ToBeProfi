@@ -68,6 +68,36 @@ public class API {
         requestQueue.add(stringRequest);
     }
 
+    public void postPD(String relation_id,
+                       String protector_id,
+                       String dependant_name,
+                       String dependant_email,
+                       String dependant_password,
+                       Response.Listener<JSONObject> listener) {
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST,
+                String.format("%s/api/pd", API), null, listener,
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        error.printStackTrace();
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("relation_id", relation_id);
+                params.put("protector_id", protector_id);
+                params.put("dependant_name", dependant_name);
+                params.put("dependant_email", dependant_email);
+                params.put("dependant_password", dependant_password);
+                return params;
+            }
+
+        };
+        requestQueue.add(jsonRequest);
+    }
+
     public void searchUserByEmailAndPassword(String email, String password,
                                   Response.Listener<JSONObject> listener) {
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET,

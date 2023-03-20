@@ -19,6 +19,7 @@ from Backend import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('api/pd', views.post_pd),
     path('api/users', views.post_user),
     path('api/users/search/<email>/<password>', views.getUserByEmailAndName),
 ]
