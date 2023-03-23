@@ -46,11 +46,11 @@ def post_pd(request, *args, **kwargs):
     if request.method == 'POST':
         data = request.POST
         print(data)
-        relation_id = data['relation_id']
-        protector_id = data['protector_id']
-        dependant_name = data['dependant_name']
-        dependant_email = data['dependant_email']
-        dependant_password = data['dependant_password']
+        relation_id = data['relationId']
+        protector_id = data['protectorId']
+        dependant_name = data['dependantName']
+        dependant_email = data['dependantEmail']
+        dependant_password = data['dependantPassword']
         protectors = User.objects.filter(id=protector_id)
         if protectors.exists(): protector = protectors[0]
         else: return JsonResponse({'status': 'user does not exist'})

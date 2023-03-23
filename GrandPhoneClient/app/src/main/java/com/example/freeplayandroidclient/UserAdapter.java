@@ -46,11 +46,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
     public static class User {
         private String id;
         private String name;
+        private String telephone;
         private Bitmap thumbnail;
         private ViewHolder viewHolder;
         private OnClickListener onClickListener;
-        public User(String id, String name) {
+        public User(String id, String name, String telephone) {
             this.name = name;
+            this.telephone = telephone;
         }
         public String getId() {
             return id;

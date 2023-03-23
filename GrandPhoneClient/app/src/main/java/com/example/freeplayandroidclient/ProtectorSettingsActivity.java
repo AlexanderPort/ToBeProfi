@@ -62,13 +62,15 @@ public class ProtectorSettingsActivity extends Base implements ContactDialog2.Co
         if (true) {
             api.postPD(id[0], dataStorage.currentUser.getId(),
                     userName, userEmail, userPassword,
-                    new Response.Listener<JSONObject>() {
+                    new Response.Listener<NetworkResponse>() {
                 @Override
-                public void onResponse(JSONObject response) {
+                public void onResponse(NetworkResponse response) {
                     try {
-                        if (response.getString("status").equals("created")) {
-                            String id = response.getString("id");
-                            String telephone = response.getString("telephone");
+                        JSONObject object = new JSONObject(new String(response.data));
+                        System.out.println(object.getString("status"));
+                        if (object.getString("status").equals("created")) {
+                            String id = object.getString("id");
+                            String telephone = object.getString("telephone");
                             User user = new User(id, userName, userEmail,
                                     userPassword, telephone, "D");
                             dataStorage.saveUser(user);

@@ -2,6 +2,7 @@ package com.example.freeplayandroidclient;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -22,6 +23,7 @@ public class CalendarActivity extends Base implements
         CalendarDialog2.CalendarDialog2Listener {
     private EditText dateText;
     private Button addButton;
+    private Button backButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +38,13 @@ public class CalendarActivity extends Base implements
             @Override
             public void onClick(View v) {
                 showCalendarDialog2();
+            }
+        });
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getBaseContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
     }

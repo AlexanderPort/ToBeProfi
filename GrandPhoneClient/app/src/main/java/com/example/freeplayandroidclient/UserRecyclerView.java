@@ -1,7 +1,11 @@
 package com.example.freeplayandroidclient;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -56,12 +60,16 @@ public class UserRecyclerView extends RecyclerView {
                 new UserAdapter.User.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Context context = getContext();
-
+                        Intent callIntent = new Intent(Intent.ACTION_CALL);
+                        callIntent.setData(Uri.parse("tel:" + user.getTelephone()));
+                        getContext().startActivity(callIntent);
                     }
                 };
-        UserAdapter.User userAdapter = new UserAdapter.User(user.getId(),user.getName());
-        userAdapter.setThumbnail(dataStorage.getUserImage(user.getId()));
+        UserAdapter.User userAdapter = new UserAdapter.User(
+                user.getId(), user.getName(), user.getTelephone());
+        Bitmap bitmap = dataStorage.getUserImage(user.getId());
+        if (bitmap != null) userAdapter.setThumbnail(bitmap);
+        else userAdapter.setThumbnail(BitmapFactory.decodeResource(getResources(), R.mipmap.user));
         userAdapter.setOnClickListener(onClickListener);
         this.users.add(userAdapter);
         this.userAdapter.setItems(this.users);
@@ -74,12 +82,16 @@ public class UserRecyclerView extends RecyclerView {
                     new UserAdapter.User.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Context context = getContext();
-
+                            Intent callIntent = new Intent(Intent.ACTION_CALL);
+                            callIntent.setData(Uri.parse("tel:" + user.getTelephone()));
+                            getContext().startActivity(callIntent);
                         }
                     };
-            UserAdapter.User userAdapter = new UserAdapter.User(user.getId(),user.getName());
-            userAdapter.setThumbnail(dataStorage.getUserImage(user.getId()));
+            UserAdapter.User userAdapter = new UserAdapter.User(
+                    user.getId(), user.getName(), user.getTelephone());
+            Bitmap bitmap = dataStorage.getUserImage(user.getId());
+            if (bitmap != null) userAdapter.setThumbnail(bitmap);
+            else userAdapter.setThumbnail(BitmapFactory.decodeResource(getResources(), R.mipmap.user));
             userAdapter.setOnClickListener(onClickListener);
             this.users.add(userAdapter);
         }

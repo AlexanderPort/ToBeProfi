@@ -73,9 +73,9 @@ public class API {
                        String dependant_name,
                        String dependant_email,
                        String dependant_password,
-                       Response.Listener<JSONObject> listener) {
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST,
-                String.format("%s/api/pd", API), null, listener,
+                       Response.Listener<NetworkResponse> listener) {
+        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST,
+                String.format("%s/api/pd", API), listener,
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
@@ -86,16 +86,16 @@ public class API {
             @Override
             protected Map<String, String> getParams() {
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("relation_id", relation_id);
-                params.put("protector_id", protector_id);
-                params.put("dependant_name", dependant_name);
-                params.put("dependant_email", dependant_email);
-                params.put("dependant_password", dependant_password);
+                params.put("relationId", relation_id);
+                params.put("protectorId", protector_id);
+                params.put("dependantName", dependant_name);
+                params.put("dependantEmail", dependant_email);
+                params.put("dependantPassword", dependant_password);
                 return params;
             }
 
         };
-        requestQueue.add(jsonRequest);
+        requestQueue.add(volleyMultipartRequest);
     }
 
     public void searchUserByEmailAndPassword(String email, String password,

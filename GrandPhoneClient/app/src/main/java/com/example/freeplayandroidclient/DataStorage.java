@@ -148,7 +148,8 @@ public class DataStorage {
         File dest = new File(Environment.getExternalStorageDirectory(), id + ".png");
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-        return BitmapFactory.decodeFile(dest.getAbsolutePath(), options);
+        if (dest.exists()) return BitmapFactory.decodeFile(dest.getAbsolutePath(), options);
+        else return null;
     }
 
     public void saveUserImage(User user, Bitmap bitmap) {
